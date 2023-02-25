@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity, FlatList, StyleSheet, TextInput } from 'r
 const App = () => {
   const [duty, setDuty] = useState();
   const [dutiesItems, setDutiesItems] = useState([
-    { key: '1', name: 'Clean the kitchen', assignedTo: '' },
+    { name: 'Clean the kitchen', assignedTo: '' },
   ]);
 
   const assignDuty = (index) => {
@@ -14,6 +14,7 @@ const App = () => {
   };
 
   const handleAddDuty = () => {
+    console.log('adding new task '+ duty);
     setDutiesItems([...dutiesItems, {name: duty, assignedTo:''}]);
     setDuty("");
   }
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingHorizontal: 15,
     backgroundColor: '#FFF',
-    borderRadius: 60,
+    borderRadius: 20,
     borderColor: '#C0C0C0',
     borderWidth:1,
     width: 250,
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     backgroundColor: '#FFF',
-    borderRadius: 60,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderColor: '#C0C0C0',
