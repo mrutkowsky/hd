@@ -1,25 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, FlatList, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, StyleSheet, TextInput } from 'react-native';
 
 const App = () => {
-  const [duties, setDuties] = useState([
+  const [duty, setDuty] = useState();
+  const [dutiesItems, setDutiesItems] = useState([
     { key: '1', name: 'Clean the kitchen', assignedTo: '' },
-    { key: '2', name: 'Do the laundry', assignedTo: '' },
-    { key: '3', name: 'Take out the trash', assignedTo: '' },
-    { key: '4', name: 'Sweep the floor', assignedTo: '' },
   ]);
 
   const assignDuty = (index) => {
-    const newDuties = [...duties];
+    const newDuties = [...dutiesItems];
     newDuties[index].assignedTo = 'You';
-    setDuties(newDuties);
+    setDutiesItems(newDuties);
   };
+
+  const handleAddDuty = () => {
+    setDutiesItems([...dutiesItems, {name: duty, assignedTo:''}]);
+    setDuty("");
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Household Duties</Text>
       <FlatList
-        data={duties}
+        data={dutiesItems}
         renderItem={({ item, index }) => (
           <View style={styles.itemContainer}>
             <Text style={styles.itemName}>{item.name}</Text>
@@ -32,6 +35,14 @@ const App = () => {
           </View>
         )}
       />
+      <View style={styles.writeTaskWrapper}>
+        <TextInput style={styles.input} placeholder={'Write a task'} value={duty} onChangeText={text => setDuty(text)} />
+        <TouchableOpacity onPress={() => handleAddDuty()}>
+          <View style={styles.addWrapper}>
+            <Text style={styles.addText}>+</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -67,6 +78,33 @@ const styles = StyleSheet.create({
   assignButton: {
     fontSize: 18,
     color: 'blue',
+  },
+  writeTaskWrapper: {
+    position: 'absolute',
+    bottom: 60,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  input: {
+    padding: 15,
+    paddingHorizontal: 15,
+    backgroundColor: '#FFF',
+    borderRadius: 60,
+    borderColor: '#C0C0C0',
+    borderWidth:1,
+    width: 250,
+  },
+  addWrapper: {
+    width: 60,
+    height: 60,
+    backgroundColor: '#FFF',
+    borderRadius: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: '#C0C0C0',
+    borderWidth:1,
   },
 });
 
